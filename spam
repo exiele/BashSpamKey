@@ -1,0 +1,12 @@
+#!/bin/bash
+while true; do
+sleep 0.07
+inp=`xinput --query-state 15 | grep -o 'key\[117\]=down'`
+
+if [ ! -z "$inp" ]; then
+
+xdotool key Page_Down
+
+fi
+
+done
