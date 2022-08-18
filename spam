@@ -1,12 +1,18 @@
 #!/bin/bash
+
+deviceId=11 #you can get this with xorg-xinput
+keyToHold=117 #get the keycode with xorg-xev
+keyToSpam=Next #as per xdotool manpage, any valid X Keysym string will work. you can also get it with xorg-xev
+
+deviceName=`xinput | grep "id=$deviceId"`
+echo "device = $deviceName"
+echo "keyToHold = $keyToHold"
+echo "keyToSpam = $keyToSpam"
+
 while true; do
-sleep 0.07
-inp=`xinput --query-state 15 | grep -o 'key\[117\]=down'`
-
-if [ ! -z "$inp" ]; then
-
-xdotool key Page_Down
-
-fi
-
+    sleep 0.007
+    inp=`xinput --query-state $deviceId | grep "\[$keyToHold\]=down"`
+    if [ ! -z "$inp" ]; then
+        xdotool key $keyToSpam
+    fi
 done
